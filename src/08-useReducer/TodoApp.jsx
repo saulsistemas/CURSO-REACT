@@ -16,30 +16,37 @@ const initialState = [
     //}
 ]
 
-const init = ()=>{
+const init = () => {
     return JSON.parse(localStorage.getItem('todos')) || []
 }
 export const TodoApp = () => {
 
-    const [todos, dispatch] = useReducer(todoReducer, initialState,init)
+    const [todos, dispatch] = useReducer(todoReducer, initialState, init)
 
-    useEffect(()=>{
+    useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
         console.log(todos);
-    },[todos])
+    }, [todos])
 
-    const handleNewTodo = (todo)=>{
+    const handleNewTodo = (todo) => {
         const action = {
-            type:'[TODO] Add Todo',
-            payload:todo
+            type: '[TODO] Add Todo',
+            payload: todo
         }
         dispatch(action)
     }
 
-    const handleDeleteTodo = (id) =>{
+    const handleDeleteTodo = (id) => {
         dispatch({
-            type:'[TODO] Remove Todo',
-            payload:id
+            type: '[TODO] Remove Todo',
+            payload: id
+        })
+    }
+
+    const handleToggleTodo = (id) => {
+        dispatch({
+            type: '[TODO] Toggle Todo',
+            payload: id
         })
     }
     return (
@@ -50,7 +57,11 @@ export const TodoApp = () => {
             <div className='row'>
 
                 <div className='col-7'>
-                    <TodoList todos={todos}  onDeleteTodo ={ id => handleDeleteTodo(id)}/>
+                    <TodoList
+                        todos={todos}
+                        onDeleteTodo={id => handleDeleteTodo(id)}
+                        onToggleTodo={handleToggleTodo}
+                    />
                 </div>
 
                 <div className='col-5'>
