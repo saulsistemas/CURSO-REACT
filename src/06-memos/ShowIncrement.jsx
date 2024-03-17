@@ -6,7 +6,7 @@ export const ShowIncrement = React.memo(({increment}) => {
     <button
         className='btn btn-success m-2'
         onClick={()=>{
-            increment();
+            increment(5);
         }}
     >
         +1
